@@ -26,8 +26,11 @@ namespace Stock.Controllers
         public ActionResult Orders()
         {
             StockServices service = new StockServices();
+
             service.InsertOrders();
+
             var orders = stockDB.Order;
+
             if (Request.IsAjaxRequest())
             {
            

@@ -1,0 +1,16 @@
+﻿@model IEnumerable<Stock.Models.Stock>
+@{
+    ViewBag.Title = "Stock List";
+}
+<script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script>
+    $(function () {
+        $.ajaxSetup({ cache: false });
+        setInterval(function () { $('#stockdiv').load('/Home/Index'); }, 10000);
+    });
+</script>
+<div id="stockdiv">
+    @Html.Partial("StockList",Model)
+</div>
+

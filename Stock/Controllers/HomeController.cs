@@ -9,27 +9,30 @@ namespace Stock.Controllers
 {
     public class HomeController : Controller
     {
-        private StockContext stockDB = new StockContext();
+        private static StockServices service;
+        public HomeController()
+        {
+            service = new StockServices(new StockContext());
+        }
         
         public ActionResult Index()
         {
-            StockServices service = new StockServices();
+            
             service.UpdateStocks();
             if (Request.IsAjaxRequest())
             {
-                return PartialView("StockList",stockDB.Stock);
+                return PartialView("StockList",service.db.GetStocks());
             }
 
-            return View(stockDB.Stock);
+            return View(service.db.GetStocks());
         }
 
         public ActionResult Orders()
         {
-            StockServices service = new StockServices();
 
             service.InsertOrders();
 
-            var orders = stockDB.Order;
+            var orders = service.db.GetOrders();
 
             if (Request.IsAjaxRequest())
             {

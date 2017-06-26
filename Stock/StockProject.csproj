@@ -161,11 +161,16 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Broker.cs" />
+    <Compile Include="Interfaces\IBrokerRepository.cs" />
+    <Compile Include="Interfaces\IOrderRepository.cs" />
+    <Compile Include="Interfaces\IPersonRepository.cs" />
+    <Compile Include="Interfaces\IStockRepository.cs" />
     <Compile Include="Models\Order.cs" />
     <Compile Include="Models\Person.cs" />
     <Compile Include="Models\SampleData.cs" />
     <Compile Include="Models\Stock.cs" />
     <Compile Include="Models\StockContext.cs" />
+    <Compile Include="Models\StockRepository.cs" />
     <Compile Include="Models\StockServices.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

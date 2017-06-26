@@ -8,16 +8,20 @@ namespace Stock.Models
 {
     public class StockServices
     {
-        StockContext db = new StockContext();
+        public StockRepository db;
+
+        public StockServices(StockContext context)
+        {
+            db = new StockRepository(context);
+        }
         public  void UpdateStocks()
         {
             Random rnd = new Random();
-            foreach (var item in db.Stock.ToList())
+            foreach (var item in db.GetStocks())
             {
                 item.Price = rnd.Next(1, 100);
-                db.Entry(item).State = EntityState.Modified;
+                db.EditStock(item);
             }
-            db.SaveChanges();
         } // end method UpdateStocks
 
         public void InsertOrders()
@@ -36,22 +40,21 @@ namespace Stock.Models
                 StockID = new Random().Next(1, 28),
             Quantity =  new Random().Next(1, 10)
         };
-            order.Price = db.Stock.Find(order.StockID).Price * order.Quantity;
+            order.Price = db.FindStockById(order.StockID).Price * order.Quantity;
             bool x = new Random().Next(1, 10) > 5 ? false : true;
             if (x)
             {
-                order.Broker = db.Broker.Find(1);
-                order.Person = db.Person.Find(1);
+                order.Broker = db.FindBrokerById(1);
+                order.Person = db.FindPersonById(1);
                 order.Commission = (decimal)0.01d;
             }
             else
             {
-                order.Broker = db.Broker.Find(1);
-                order.Person = db.Person.Find(2);
+                order.Broker = db.FindBrokerById(1);
+                order.Person = db.FindPersonById(2);
                 order.Commission = (decimal)0.02;
             }
-            db.Order.Add(order);
-            db.SaveChanges();
+            db.AddOrder(order);
         } // end method CreateOrder
 
         private int GetRandomStock()
